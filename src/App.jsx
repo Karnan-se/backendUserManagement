@@ -1,13 +1,26 @@
 import { useState } from 'react'
 import Login from './pages/login'
 import './App.css'
+import { BrowserRouter as Router,Routes, Route } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+
+
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
-   <Login/>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Login/>}></Route>
+
+        
+      </Routes>
+    </Router>
+   
     </>
   )
 }
