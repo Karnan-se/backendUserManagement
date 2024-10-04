@@ -1,16 +1,15 @@
 import { createSlice, nanoid , createAsyncThunk} from "@reduxjs/toolkit"
 import axios from "axios"
 import {sub} from "date-fns"
+import { useDispatch } from "react-redux"
 
 const intialState ={
-    id:5, title :"karnan", content:26,
-    id:7, title:"thakir", content:19
-}
-const newIntialState ={
     posts:[],
     status: Idle,
     error:null
+
 }
+
 
 export const fetchPosts = createAsyncThunk("post/fetchPosts", async()=>{
     try {
@@ -60,10 +59,11 @@ const postSlice = createSlice({
         const existingPost = state.posts.find(post=> post.id == postId)
         existingPost.reactions[reaction]++
         }
-    
 
-    
     },
+    // dispatch = useDispatch();
+    // dispatch(reactionAdded(postId, reaction))
+
     extraReducers(builder){
         builder
         .addCase(fetchPosts.pending, (state, action)=>{
@@ -86,14 +86,22 @@ const postSlice = createSlice({
         })
         .addCase(fetchPosts.rejected, (state, action)=> {
             state.status = "rejected"
+            state.error = action.error.message;
         })
     }
 })
 
 export default postSlice.reducer
-export const selectAllpost = (state)=>state.posts
-export const {postAdded} = postSlice.actions
+export const selectAllpost = (state)=>state.posts.posts
+export const  getStatus = (state)=>state.posts.status
+export const  errorStatus = (state)=>state.posts.error
+
+export const {postAdded, reactionAdded} = postSlice.actions
 
 // const OnClick =()=>{
 //     dispatch(postAdded(title, content))
 // }
+
+// while we creating a createAsyncThink we can import all the 
+// the things to the otherPage and display 
+// use dispacthc for this custom addcase fethPost methods

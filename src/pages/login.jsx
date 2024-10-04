@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { errorStatus, getStatus, selectAllpost, fetchPosts, postAdded,reactionAdded} from '../features/trashSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Login() {
+
+    const dispatch = useDispatch();
+
+    const posts = useSelector(selectAllpost);
+    const poststatus = useSelector(getStatus);
+    const error = useSelector(errorStatus)
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -10,6 +18,14 @@ function Login() {
     const handleSignIn =()=>{
         console.log(email, password)
     }
+
+    useEffect(()=>{
+        if(poststatus == "idle"){
+            dispatch(fetchPosts())
+        }
+
+
+    },[dispatch, poststatus])
 
     
    
