@@ -6,6 +6,7 @@ import connectDb from "./config/db.js"
 
 import adminRoute from "./routes/adminRoute.js"
 import userRoute from "./routes/userRoute.js"
+import { notFound, errorHandler } from "./middlwares/errormiddleware.js"
 
 
 
@@ -27,7 +28,11 @@ app.get("/", (req, res)=>{
 
 })
 app.use("/api/admin", adminRoute)
-app.use("api/user", userRoute)
+app.use("/api/user", userRoute)
+
+
+app.use(notFound)
+app.use(errorHandler)
 
 
 app.listen(port, ()=>{

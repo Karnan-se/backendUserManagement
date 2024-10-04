@@ -1,4 +1,4 @@
-import User from "../../models/userModel"
+import User from "../../models/userModel.js"
 
 const fetchUser = async()=>{
    try {
@@ -11,7 +11,7 @@ const fetchUser = async()=>{
    }
 }
 
-const DeleteUser = async(userId)=>{
+const deleteUser = async(userId)=>{
     try {
         const deleteUser = await User.findByIdAndDelete(userId);
         if(!deleteUser){
