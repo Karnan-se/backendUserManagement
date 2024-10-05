@@ -1,35 +1,30 @@
  import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
- import firebaseConfig from "../firebase/firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { json } from "react-router-dom";
+
 
  
  const initialState ={
-    user : null,
-    loading:false,
-    error:null
- }
+  userInfo:localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) :null}
 
- export const signInWithFirebase = createAsyncThunk("auth/signInWithFirebase", async({email, password}, thunkAPI)=>{
-        try{
-            const userCredential = await user.signInWithEmailAndPassword(email, password)
-            return userCredential.user
-        }catch(error){
-            return thunkAPI.rejectWithValue(error.message)
-        }
-    }
 
- )
+
  const authSlice = createSlice({
     name : "auth",
     initialState: initialState,
-    reducers:{},
-    extraReducers: (builder)=>{
-        builder
-        .addCase(signInWithFirebase.pending, state())
-    }
+    reducers:{
+        setCredentials:(state, action)=>{
+            state.userInfo = action.payload;
+            localStorage.setItem("userInfo", JSON.stringify(action.payload))
+        },
+        logout:(state, action)=>{
+            state.userInfo = null
+            localStorage.removeItem("userInfo")
+        }
+    },
+   
 
     
  })
-
-
+ export const AuthorisationState = (state)=>state.auth
+ export const {setCredentials, logout} = authSlice.actions
  export default authSlice.reducer

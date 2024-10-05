@@ -1,36 +1,46 @@
 import React, { useEffect, useState } from 'react'
-import { errorStatus, getStatus, selectAllpost, fetchPosts, postAdded,reactionAdded} from '../features/trashSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { AuthorisationState, setCredentials } from '../../features/authSlice'
+import { useLoginMutation, useLogoutMutation, useRegisterMutation } from '../../features/userApiSlice'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import swal from 'sweetalert2'
+
+
 
 function Login() {
 
-    const dispatch = useDispatch();
-
-    const posts = useSelector(selectAllpost);
-    const poststatus = useSelector(getStatus);
-    const error = useSelector(errorStatus)
-
+    const [login, {isLoading, isSuccess, error}] = useLoginMutation()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
 
 
-    const handleSignIn =()=>{
+
+    const handleSignIn =async(e)=>{
+        e.preventDefault()
         console.log(email, password)
-    }
+        try {
 
-    useEffect(()=>{
-        if(poststatus == "idle"){
-            dispatch(fetchPosts())
+        const res = await login({email, password}).unwrap();
+        console.log(res.registerUser)
+        dispatch(setCredentials({...res.registerUser}))
+        navigate("/admindashboard")
+        
+        
+        
+        }catch(error){
+         
+
+             swal.fire({
+                icon:"error",
+                title: "oops",
+                text:error?.message || error.data.message || "unexpected Error"
+            })
         }
-
-
-    },[dispatch, poststatus])
-
-    
-   
-
-
+        
+    }
 
 
   return (
@@ -116,6 +126,10 @@ function Login() {
                     </button>
                 </div>
             </form>
+
+
+{/* optionall REndering using Props */}
+            
             <div className="mt-6">
 
                 <div className="relative">

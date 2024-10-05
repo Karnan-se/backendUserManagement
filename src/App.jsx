@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import Login from './pages/login'
+import Login from './pages/admin/login'
 import './App.css'
 import { BrowserRouter as Router,Routes, Route } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { store } from './store/reduxStore'
+import { Provider } from 'react-redux'
 
 
 
@@ -13,6 +14,7 @@ function App() {
 
   return (
     <>
+    <Provider store={store}> 
     <Router>
       <Routes>
         <Route path='/' element={<Login/>}></Route>
@@ -20,6 +22,7 @@ function App() {
         
       </Routes>
     </Router>
+    </Provider>
    
     </>
   )
