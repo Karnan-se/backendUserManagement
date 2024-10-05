@@ -1,5 +1,5 @@
- import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { json } from "react-router-dom";
+import { createSlice } from "@reduxjs/toolkit";
+
 
 
  
@@ -9,11 +9,12 @@ import { json } from "react-router-dom";
 
 
  const authSlice = createSlice({
-    name : "auth",
+    name : "adminAuth",
     initialState: initialState,
     reducers:{
         setCredentials:(state, action)=>{
             state.userInfo = action.payload;
+            console.log("action.payload:",action.payload)
             localStorage.setItem("userInfo", JSON.stringify(action.payload))
         },
         logout:(state, action)=>{
@@ -25,6 +26,5 @@ import { json } from "react-router-dom";
 
     
  })
- export const AuthorisationState = (state)=>state.auth
  export const {setCredentials, logout} = authSlice.actions
  export default authSlice.reducer

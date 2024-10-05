@@ -27,6 +27,9 @@ export const usersApiSlice = createApi({
                 method:"POST",
                 body:data,
             }),
+            headers:{
+                "Content-Type" :"application/json",
+            },
             invalidatesTags:["users-Details"]
         }),
         logout:builder.mutation({

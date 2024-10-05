@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { AuthorisationState, setCredentials } from '../../features/authSlice'
-import { useLoginMutation, useLogoutMutation, useRegisterMutation } from '../../features/userApiSlice'
-import { useDispatch } from 'react-redux'
+import {  setCredentials } from '../../features/authSlice'
+import { useLoginMutation, useLogoutMutation, useRegisterMutation } from '../../features/adminApiSlice'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import swal from 'sweetalert2'
 
@@ -15,6 +15,15 @@ function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const adminInfo = useSelector((state)=>state.adminauth.userInfo);
+    // console.log(adminInfo.userInfo)
+    console.log("adminInfo at login", adminInfo)
+    useEffect(()=>{
+        if(adminInfo){
+            navigate("/admindashboard")
+        }
+    },[adminInfo])
+
 
 
 
@@ -24,7 +33,7 @@ function Login() {
         try {
 
         const res = await login({email, password}).unwrap();
-        console.log(res.registerUser)
+        console.log("this is res.regiterUser:",res.registerUser)
         dispatch(setCredentials({...res.registerUser}))
         navigate("/admindashboard")
         
@@ -52,7 +61,8 @@ function Login() {
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600 max-w">
             Or
-            <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+            <a href="#" className="font-medium text-blue-600 hover:text-blue-500"
+            onClick={()=>navigate("/register")}>
                 create an account
             </a>
         </p>
