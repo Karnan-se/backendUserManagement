@@ -3,6 +3,7 @@ import express from "express"
 import dotenv  from "dotenv"
 import cookieParser from "cookie-parser"
 import connectDb from "./config/db.js"
+import cors from "cors"
 
 import adminRoute from "./routes/adminRoute.js"
 import userRoute from "./routes/userRoute.js"
@@ -13,6 +14,7 @@ import { notFound, errorHandler } from "./middlwares/errormiddleware.js"
 
 
 const app = express()
+app.use(cors())
 dotenv.config()
 app.use(express.json())
 app.use(cookieParser())

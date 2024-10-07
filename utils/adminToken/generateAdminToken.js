@@ -7,11 +7,11 @@ const generatAdminTOken = (res, userId)=>{
     res.cookie('adminJwt', jwtToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV !== 'development',
-        sameSite: 'strict',
+        sameSite: 'none',
         maxAge: 30 * 24 * 60 * 60 * 1000 
     });
 
+    console.log("jwtTokenCreated name : adminJwt")
 
-   res.staus(200).json({message:"Token Created and cookie Set Succesfully"})
 }
 export default generatAdminTOken

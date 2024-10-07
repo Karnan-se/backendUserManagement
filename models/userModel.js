@@ -18,6 +18,7 @@ const userSchema = mongoose.Schema({
     },
     ProfilePicture:{
         type:String,
+        required:false,
     }
 })
 
