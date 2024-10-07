@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 
 const AdminPrivateRoute = ()=>{
-    const adminState = useSelector(state=>state.adminauth.userInfo)
+    const adminState = useSelector(state=>state.adminauth.adminInfo)
     console.log("adminState", adminState)
 
     return adminState? <Outlet /> : <Navigate to='/admin/login' replace/>

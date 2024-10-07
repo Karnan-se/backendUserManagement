@@ -15,8 +15,8 @@ function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const adminInfo = useSelector((state)=>state.adminauth.userInfo);
-    // console.log(adminInfo.userInfo)
+    const adminInfo = useSelector((state)=>state.adminauth.adminInfo);
+    // console.log(adminInfo.adminInfo)
     console.log("adminInfo at login", adminInfo)
     useEffect(()=>{
         if(adminInfo){
@@ -60,10 +60,11 @@ function Login() {
             Sign in to your account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600 max-w">
-            Or
+            
             <a href="#" className="font-medium text-blue-600 hover:text-blue-500"
-            onClick={()=>navigate("/register")}>
-                create an account
+            // onClick={()=>navigate("/register")}
+            >
+                Admin Login
             </a>
         </p>
     </div>

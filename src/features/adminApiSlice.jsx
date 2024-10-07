@@ -4,8 +4,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const USERS_URL ="http://localhost:3000/api/admin"
 
-export const usersApiSlice = createApi({
-    reducerPath:"userauth",
+export const adminApiSlice = createApi({
+    reducerPath:"adminAuth",
     baseQuery:fetchBaseQuery({baseUrl:USERS_URL}),
 
     endpoints:(builder)=>({
@@ -47,10 +47,17 @@ export const usersApiSlice = createApi({
             }),
             invalidatesTags:["users-Details"]
         }),
+        getUsersData:builder.mutation({
+            query:()=>({
+                url:`/`,
+                method:"GET",   
+            })
+
+        })
         
     }),
 
 });
 
-export const {useLoginMutation, useLogoutMutation, useRegisterMutation, useUpdateuserMutation} = usersApiSlice
+export const {useLoginMutation, useLogoutMutation, useRegisterMutation, useUpdateuserMutation, useGetUsersDataMutation} = adminApiSlice
 
