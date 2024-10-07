@@ -7,6 +7,9 @@ import { Provider } from 'react-redux'
 import AdminPrivateRoute from './pages/admin/adminPrivateRoute'
 import Registration from './pages/user/register'
 import AdminDashboard from './pages/admin/admindashboard'
+import UserLogin from './pages/user/userLogin'
+import UserPage from './pages/user/userdashBoard'
+import UserEdit from './pages/user/userEdit'
 
 
 
@@ -30,7 +33,13 @@ function App() {
 
 {/* forusers */}
         <Route path='user/register' element={<Registration/>}></Route>
-        <Route path='user/login' element={<Registration/>}></Route>
+        <Route path='user/login' element={<UserLogin/>}></Route>
+
+  {/* protectedRoute */}
+        <Route path='/' element={<UserPage/>}>
+        <Route path='/edit'  element={<UserEdit/>}></Route>
+        
+        </Route>
 
         
       </Routes>

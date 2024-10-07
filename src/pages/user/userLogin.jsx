@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from 'react'
-// import {  setCredentials } from '../../features/authSlice'
-// import { useLoginMutation, useLogoutMutation, useRegisterMutation } from '../../features/adminApiSlice'
+import { setUserCredential } from '../../features/userAuthSlice'
+import { useUserLoginMutation } from '../../features/userApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import swal from 'sweetalert2'
 
 
 
-function Login() {
+function UserLogin() {
 
-    const [login, {isLoading, isSuccess, error}] = useLoginMutation()
+    
+    const [userLogin, {isLoading, isSuccess, error}] = useUserLoginMutation()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const adminInfo = useSelector((state)=>state.adminauth.adminInfo);
-    // console.log(adminInfo.adminInfo)
-    console.log("adminInfo at login", adminInfo)
+    const userInfo = useSelector((state)=>state.userAuth.userInfo);
+    // console.log(userInfo.userInfo)
+    console.log("userInfo at login", userInfo)
     useEffect(()=>{
-        if(adminInfo){
-            navigate("/admindashboard")
+        if(userInfo){
+            console.log(userInfo)
+           
         }
-    },[adminInfo])
+    },[userInfo])
 
 
 
@@ -32,10 +34,11 @@ function Login() {
         console.log(email, password)
         try {
 
-        const res = await login({email, password}).unwrap();
-        console.log("this is res.regiterUser:",res.registerUser)
-        dispatch(setCredentials({...res.registerUser}))
-        navigate("/admindashboard")
+        const res = await userLogin({email, password}).unwrap();
+        
+        console.log(res.userData)
+        dispatch(setUserCredential({...res.userData}))
+        navigate("/")
         
         
         
@@ -59,14 +62,14 @@ function Login() {
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600 max-w">
+        <Link to={"/user/register"} className="mt-2 text-center text-sm text-gray-600 max-w">Create Account
             
-            <a href="#" className="font-medium text-blue-600 hover:text-blue-500"
-            // onClick={()=>navigate("/register")}
+            {/* <Link to="#" className="font-medium text-blue-600 hover:text-blue-500"
+            
             >
-                Admin Login
-            </a>
-        </p>
+                User Login
+            </Link> */}
+        </Link>
     </div>
 
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -186,4 +189,4 @@ function Login() {
   )
 }
 
-export default Login
+export default UserLogin
