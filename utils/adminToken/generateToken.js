@@ -11,9 +11,9 @@ const generateToken = (res, userId)=>{
     })
 
     const cookieOptions= {
-        httpOnly: false,         // Prevent client-side JavaScript access to the cookie
-        secure: false,  // Use secure cookies in production (HTTPS)
-        sameSite: "None",      // Helps prevent CSRF attacks
+        httpOnly: true,         // Prevent client-side JavaScript access to the cookie
+        // secure: false,  // Use secure cookies in production (HTTPS)
+        // sameSite: "None",      // Helps prevent CSRF attacks
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     }
     try{

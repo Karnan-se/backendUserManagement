@@ -14,7 +14,10 @@ import { notFound, errorHandler } from "./middlwares/errormiddleware.js"
 
 
 const app = express()
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:5173',   // Your frontend URL
+    credentials: true                  // Allow credentials (cookies, etc.)
+}));
 dotenv.config()
 app.use(express.json())
 app.use(cookieParser())

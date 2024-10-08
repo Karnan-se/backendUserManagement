@@ -2,7 +2,9 @@ import { passwordHash } from "../utils/adminHelper/passwordHash.js";
 import User from "../models/userModel.js";
 import generateToken from "../utils/adminToken/generateToken.js";
 import { passWordCompare } from "../utils/adminHelper/passwordcompare.js";
-import { hash } from "bcrypt";
+import mongoose, { Mongoose } from "mongoose";
+
+
 
 
 
@@ -43,15 +45,22 @@ const register = async(req, res)=>{
 const getUserData = async(req, res)=>{
     try{
         console.log("get Data")
-       const userId = req.user;
-       console.log(userId);
-        if(userId){
-            const userData = await User.findById({userId});
+
+        const userString =  req.user
+        console.log(userString, "req, user")
+       
+       const ObjectId= new mongoose.Types.ObjectId(userString.userId)
+       console.log(ObjectId)
+       
+       
+        if(ObjectId){
+            const userData = await User.findById({_id: ObjectId});
             if(!userData){
                res.status(401) 
                throw new Error("user not Found")
             }
-            res.status(200).json({message:"userData found", userData})
+            console.log("success")
+           return res.status(200).json({message:"userData found", userData})
 
 
         }
