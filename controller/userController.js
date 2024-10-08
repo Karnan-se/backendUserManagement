@@ -3,6 +3,7 @@ import User from "../models/userModel.js";
 import generateToken from "../utils/adminToken/generateToken.js";
 import { passWordCompare } from "../utils/adminHelper/passwordcompare.js";
 import mongoose, { Mongoose } from "mongoose";
+import { destroyUserToken } from "../utils/adminToken/destroyUserToken.js";
 
 
 
@@ -101,9 +102,21 @@ const userId = userDetails._id.toString()
     }
 }
 
+const userLogout = async(req, res)=>{
+    try{
+        destroyUserToken()
+        return res.status(200).json({message:"Successfully Logged Out and Jwt Cleared"})
+
+    }catch(e){
+        console.log(e.message)
+    }
+}
+
+
 export {
     register,
     getUserData,
-    userlogin
+    userlogin,
+    userLogout
 
 }
