@@ -23,8 +23,20 @@ export const userSlice = createApi({
         getUserData: builder.query({
             query: () => "/",
         }),
+        logout: builder.mutation({
+            query:()=>({
+                url:"/logout",
+                method:"POST",
+                
+            })
+                
+            
+
+        }),
+
     }),
+
 });
 
 // Export hooks for usage in functional components
-export const { useUserLoginMutation, useUserRegisterMutation, useGetUserDataQuery } = userSlice;
+export const { useUserLoginMutation, useUserRegisterMutation, useGetUserDataQuery, useLogoutMutation } = userSlice;

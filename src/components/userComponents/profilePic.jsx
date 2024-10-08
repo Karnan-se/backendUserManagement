@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { userLogout } from '../../features/userAuthSlice';
+import { useDispatch } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from '../../features/userApiSlice';
+
 
 
 
 
 export default function ProfilePic(){
+
+  const dispatch = useDispatch();
+  const [logout]= useLogoutMutation()
+  const navigate = useNavigate()
+
+ 
 
    
         const [isOpen, setIsOpen] = useState(false);
@@ -12,9 +23,22 @@ export default function ProfilePic(){
         const toggleMenu = () => {
           setIsOpen(!isOpen);
         };
-      
 
+        const handleLogout = async(e)=>{
+          e.preventDefault();
+          try{
+          dispatch(userLogout());
+          const res = await logout().unwrap();
+          console.log(res)
+          if(res){
+            navigate("/user/login")
 
+          }
+          }catch(e){
+            console.log(e.message);
+          }
+
+        }
 
     return(
         <>
@@ -50,9 +74,9 @@ export default function ProfilePic(){
             <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem">
               Your Profile
             </a>
-            <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem">
-              Sign out
-            </a>
+            <NavLink  className="block px-4 py-2 text-sm text-gray-700" role="menuitem" onClick={handleLogout}>
+              Sign out 
+            </NavLink>
           </div>
         )}
       </div>
