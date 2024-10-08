@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useUserRegisterMutation } from "../../features/userApiSlice.jsx";
 import { validateForm } from "./validate.jsx";
 import Swal from "sweetalert2";
+import { setUserCredential } from "../../features/userAuthSlice.jsx";
 
 
 
@@ -53,7 +54,9 @@ useEffect(()=>{
         
         
   
-        let isValid =  validateForm(name, email, password, confirmPassword, setError, isSubmit)
+        let isValid =  validateForm(name, email, password, confirmPassword, setError, true)
+
+        console.log(isValid)
 
 
         if(!isValid  || password != confirmPassword){
@@ -84,6 +87,9 @@ useEffect(()=>{
             text:"User Created Successfully"
 
         })
+        console.log(res.registeredUser);
+        dispatch(setUserCredential({...res.registeredUser}))
+        navigate("/")
 
         }catch(error){
             console.log(error.data)

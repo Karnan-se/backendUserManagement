@@ -1,12 +1,47 @@
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import InputAdornment from '@mui/material/InputAdornment';
-import { useState } from 'react';
-import { useGetUserDataQuery } from '../../features/userApiSlice';
+
+import { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { validateForm } from './validate';
+import Swal from 'sweetalert2';
+
 export default function UserEdit(){
+
+
+  const userData = useOutletContext();
 
     const [image, setImage] = useState(null); 
     const [name, setName]= useState("");
     const [email, setEmail] = useState("");
+    const [isSubmit, setSubmit] = useState(false)
+    const [error, setError] = useState({
+      name:false,
+      email:false,
+    })
+
+
+
+    
+    useEffect(()=>{
+      if(userData){
+        const {name, email} = userData;
+        setName(name);
+        setEmail(email);
+
+      }
+ 
+    },[userData])
+
+    useEffect(()=>{
+      validateForm(name, email, undefined, undefined, setError, true )
+    },[name, email])
+
+    useEffect(()=>{
+      console.log(error)
+
+    },[error])
+
+
+  
 
    
 
@@ -19,6 +54,19 @@ export default function UserEdit(){
     };
 
 
+    const handleSubmit =(e)=>{
+      e.preventDefault();
+      let isValid =  validateForm(name, email, undefined, undefined, setError, true)
+      console.log(isValid)
+      if(!isValid){
+        console.log("form not Valid")
+        Swal.fire({
+          icon:"error",
+          title:"Form Validation Failed"
+        })
+      }
+    }
+
     return(
         <>
        <div className="flex justify-center bg-slate-400 w-lg">
@@ -30,10 +78,14 @@ export default function UserEdit(){
             type="text"
             id="name"
             name="name"
+            value={name}
+            onChange={((e)=>setName(e.target.value))}
             className="border w-96 rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your name"
+            
           />
         </div>
+        <p className={`flex  ${error.name ? " text-red-500" : "hidden" }`}>Atleast 3 charectors required</p>
 
         {/* Email Input */}
         <div className="mb-6">
@@ -42,15 +94,19 @@ export default function UserEdit(){
             type="email"
             id="email"
             name="email"
+            value={email}
+            onChange={((e)=>setEmail(e.target.value))}
             className="border w-96 rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your email"
           />
         </div>
+        <p className={`flex  ${error.email  ? " text-red-500" : "hidden" }`}>InValid-Email</p>
         {image && (
           <div className="mt-4 flex justify-center ">
             <img
               src={image}
               alt="Uploaded"
+             
               className="w-96 h-96 object-cover rounded" 
             />
           </div>
@@ -69,7 +125,7 @@ export default function UserEdit(){
           />
         </div>
         <div className='flex justify-end '>
-            <button className='btn border hover:bg-slate-700 hover:text-yellow-50 w-24 rounded-md h-9 border-indigo-700 bg-blue-300'> Submit</button>
+            <button className='btn border hover:bg-slate-700 hover:text-yellow-50 w-24 rounded-md h-9 border-indigo-700 bg-blue-300' onClick={handleSubmit}> Submit</button>
         </div>
 
 

@@ -10,6 +10,7 @@ import AdminDashboard from './pages/admin/admindashboard'
 import UserLogin from './pages/user/userLogin'
 import UserPage from './pages/user/userdashBoard'
 import UserEdit from './pages/user/userEdit'
+import UserPrivateRoute from './pages/user/userPrivateRoute'
 
 
 
@@ -36,9 +37,10 @@ function App() {
         <Route path='user/login' element={<UserLogin/>}></Route>
 
   {/* protectedRoute */}
+        <Route element={<UserPrivateRoute/>}>   
         <Route path='/' element={<UserPage/>}>
         <Route path='/edit'  element={<UserEdit/>}></Route>
-        
+        </Route>
         </Route>
 
         

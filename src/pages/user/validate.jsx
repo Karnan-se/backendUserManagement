@@ -16,8 +16,10 @@ export const validateForm = (name, email, password , confirmPassword,setError, i
       
   }));
 
+  let newErrorState
+
   if(isSubmit){
-        const newErrorState = { ...newError };  
+         newErrorState = { ...newError };  
 
         Object.keys(newErrorState).forEach(key => {
           if (newErrorState[key] !== false && newErrorState[key] == "") {
@@ -26,6 +28,10 @@ export const validateForm = (name, email, password , confirmPassword,setError, i
         });
         setError(newErrorState)
   }
-    return !Object.values(newError).includes(true);
+  if(newErrorState){
+    return !Object.values(newErrorState).includes(true);
+
+  }
+   
   };
   

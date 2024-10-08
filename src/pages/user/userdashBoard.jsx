@@ -4,15 +4,20 @@ import { useGetUserDataQuery } from "../../features/userApiSlice"
 
 
 
-export default function UserPage(){
+export default function UserPage (){
 
-    const {data, isLoading}= useGetUserDataQuery()
+    const {data, isLoading, isSuccess}= useGetUserDataQuery()
+    if(isSuccess, data){
+
+        console.log(data.userData)
+    }
+
 
     return(
         <>
         <NavBarComponent/>
 
-        <Outlet data={data}/>
+        <Outlet context={isSuccess? data.userData: null}/>
 
         </>
     )
