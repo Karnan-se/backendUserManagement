@@ -4,7 +4,7 @@ const USER_URL = "http://localhost:3000/api/user";
 
 export const userSlice = createApi({
     reducerPath: "userAuthApi",  // This
-    baseQuery: fetchBaseQuery({ baseUrl: USER_URL }),
+    baseQuery: fetchBaseQuery({ baseUrl: USER_URL , credentials : "include",}),
     endpoints: (builder) => ({
         userLogin: builder.mutation({
             query: (data) => ({
