@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {  setCredentials } from '../../features/authSlice'
-import { useLoginMutation, useLogoutMutation, useRegisterMutation } from '../../features/adminApiSlice'
+import { useLoginMutation,  } from '../../features/adminApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import swal from 'sweetalert2'

@@ -4,6 +4,8 @@ import { useGetUserDataQuery } from "../../features/userApiSlice"
 
 
 
+
+
 export default function UserPage (){
 
     const {data, isLoading, isSuccess}= useGetUserDataQuery()

@@ -1,15 +1,19 @@
 import { Form, Button, Image } from "react-bootstrap";
 import { useEffect, useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import { validateForm } from './validate';
 import { useUserUpdateMutation } from '../../features/userApiSlice';
 import Swal from 'sweetalert2';
+import { useSelector } from "react-redux";
 
-export default function UserEdit(){
-
+export default function AdminUserEdit(){
+   
 
   const userData = useOutletContext();
+  console.log(userData, "userData from context")
 
+ 
+    
     const [imageURl, setImageURl] = useState(null)
     const [image, setImage] = useState("");
     const [imageFile, setImageFile] = useState(null) 
@@ -24,17 +28,18 @@ export default function UserEdit(){
 
     const [userUpdate] = useUserUpdateMutation()
 
-
+// I need to filter here
 
     
     useEffect(()=>{
       if(userData){
+        console.log(userData, "useEffect")
         const {name, email, _id, ProfilePicture } = userData;
         setName(name);
         setEmail(email);
         setId(_id)
-        // const slicedString = {...ProfilePictue}.slice(9)
         setImageURl(ProfilePicture)
+        
       }
  
     },[userData])
@@ -115,6 +120,15 @@ export default function UserEdit(){
       try {
         const res = await userUpdate(formData).unwrap()
         console.log(res);
+        if(res){
+           return Swal.fire({
+                icon:"success",
+                title:"success",
+                text:"User Details Updated"
+                
+                
+            })
+        }
         
       } catch (error) {
         console.log(error.message)

@@ -31,10 +31,17 @@ export const userSlice = createApi({
             })
                 
         }),
+        userUpdate:builder.mutation({
+            query:(data)=>({
+                url:"/update",
+                method:"POST",
+                body:data
+            }),
+        })
 
     }),
 
 });
 
 // Export hooks for usage in functional components
-export const { useUserLoginMutation, useUserRegisterMutation, useGetUserDataQuery, useLogoutMutation } = userSlice;
+export const { useUserLoginMutation, useUserRegisterMutation, useGetUserDataQuery, useLogoutMutation, useUserUpdateMutation } = userSlice;

@@ -32,7 +32,7 @@ export const adminApiSlice = createApi({
             },
             invalidatesTags:["users-Details"]
         }),
-        logout:builder.mutation({
+        adminlogout:builder.mutation({
             query:()=>({
                 url:`/logout`,
                 method:"post",
@@ -47,17 +47,26 @@ export const adminApiSlice = createApi({
             }),
             invalidatesTags:["users-Details"]
         }),
-        getUsersData:builder.mutation({
-            query:()=>({
-                url:`/`,
-                method:"GET",   
-            })
+        getUsersData: builder.query({
+            query: () => ({
+              url: `/admindashboard`,
+              method: "GET",  
+            }),
+            providesTags:["users-Details"]
 
-        })
+        }),
+        deleteUserData :builder.mutation({
+            query:(data)=>({
+                url:"/deleteUser",
+                method:"POST",
+                body:data
+            }),
+            invalidatesTags:["users-Details"]
+        }),
         
     }),
 
 });
 
-export const {useLoginMutation, useLogoutMutation, useRegisterMutation, useUpdateuserMutation, useGetUsersDataMutation} = adminApiSlice
+export const {useLoginMutation, useAdminlogoutMutation, useRegisterMutation, useUpdateuserMutation, useGetUsersDataQuery, useDeleteUserDataMutation} = adminApiSlice
 
