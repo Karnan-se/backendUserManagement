@@ -4,6 +4,9 @@ import dotenv  from "dotenv"
 import cookieParser from "cookie-parser"
 import connectDb from "./config/db.js"
 import cors from "cors"
+import path from "path"
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 import adminRoute from "./routes/adminRoute.js"
 import userRoute from "./routes/userRoute.js"
@@ -15,14 +18,17 @@ import { notFound, errorHandler } from "./middlwares/errormiddleware.js"
 
 const app = express()
 app.use(cors({
-    origin: 'http://localhost:5173',   // Your frontend URL
-    credentials: true                  // Allow credentials (cookies, etc.)
+    origin: 'http://localhost:5173',   
+    credentials: true                  
 }));
 dotenv.config()
 app.use(express.json())
 app.use(cookieParser())
-app.use(express.static("./public"))
+// app.use(express.static("./public"))
 app.use(express.urlencoded({extended:true}));
+
+app.use(express.static('./photoes'));
+app.use('/uploads', express.static('uploads'));
 
 const port = process.env.PORT ||  3000
 

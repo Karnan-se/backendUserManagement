@@ -112,11 +112,51 @@ const userLogout = async(req, res)=>{
     }
 }
 
+const userUpdate = async(req, res)=>{
+    try {
+        console.log("updateData")
+        const {_id, name , email, } = req.body;
+
+       const ObjectId= new mongoose.Types.ObjectId(_id)
+
+        console.log(name, email, _id, "from Front End")
+
+        let profilePicture
+        if(req.file){
+         profilePicture =`/uploads/${req.file.filename}` 
+        console.log(profilePicture,"propic")
+        }
+
+        let userDetails = await User.findById({_id:ObjectId});
+        if(userDetails){
+           userDetails.set({name, email})
+            if(req.file){
+                console.log("saving here")
+              await userDetails.set({ProfilePicture: profilePicture})
+              
+            }
+        }
+            const dataSave=await userDetails.save()
+            
+        
+        if(dataSave){
+            res.status(200).json({message:"userSaved SuccessFully" ,dataSave})
+        }
+        
+
+        
+    } catch (error) {
+        console.log(error.message)
+        
+    }
+}
+
 
 export {
     register,
     getUserData,
     userlogin,
-    userLogout
+    userLogout,
+    userUpdate
 
 }

@@ -5,6 +5,7 @@ import { passwordHash } from "../utils/adminHelper/passwordHash.js";
 import { passWordCompare } from "../utils/adminHelper/passwordcompare.js";
 import generatAdminTOken from "../utils/adminToken/generateAdminToken.js";
 import User from "../models/userModel.js";
+import destroyAdminToken from "../utils/adminToken/destroyAdminToken.js";
 
 
 const register = async(req, res)=>{
@@ -73,10 +74,39 @@ const register = async(req, res)=>{
  }
 
 }
-const getUsersData = async(req, res)=>{
+const getAllUsers = async(req, res)=>{
     try {
         const userData = await User.find({})
+        res.status(200).json({message:"success", userData})
         
+        
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+const AdminLogout = async(req, res)=>{
+    try{
+        console.log("hello")
+        destroyAdminToken()
+        return res.status(200).json({message:"Successfully Logged Out and Jwt Cleared"})
+
+    }catch(e){
+        console.log(e.message)
+    }
+}
+
+const deleteUser = async(req, res)=>{
+    try {
+        console.log("goin to delete")
+        const {id} = req.body;
+        console.log(id)
+
+        const deleteUser = await User.findByIdAndDelete({_id:id})
+        console.log(deleteUser)
+        if(deleteUser){
+            res.status(200).json({message:"user Deleted"})
+        }
         
     } catch (error) {
         
@@ -88,4 +118,7 @@ const getUsersData = async(req, res)=>{
 export {
     register,
     adminLogin,
+    AdminLogout,
+    getAllUsers,
+    deleteUser
 }
