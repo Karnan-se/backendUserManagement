@@ -7,8 +7,8 @@ const authenticateAdmin =async(req, res, next)=>{
         const TokenFromRequest = req.cookies.adminJwt
 
         if(!TokenFromRequest){
-            res.status(401);
-            throw new Error(`Authentication Failed: No Token`)
+            res.status(401).json({message:"Forbidden: Tokken is missing"})
+            
         }
 
             const decodedTokenData = jwt.verify(TokenFromRequest, process.env.JWT_SECRET_KEY_ADMIN)
@@ -16,7 +16,10 @@ const authenticateAdmin =async(req, res, next)=>{
             const requestedUser = await Admin.findById(decodedTokenData.userId).select("-password")
             if(requestedUser){
                 req.user = requestedUser;
+                console.log("here we are using adminJWt")
                 next()
+            }else{
+                console.log("decode Error:  Couldnot find the UserId in DataBase")
             }
 
 

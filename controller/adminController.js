@@ -59,7 +59,8 @@ const register = async(req, res)=>{
         
      }
      if(admin && hashedpassword){
-     generatAdminTOken(res, admin._id);
+        const adminId = await admin._id;
+     generatAdminTOken(res, adminId);
      }
      
      const registerUser ={
@@ -88,7 +89,7 @@ const getAllUsers = async(req, res)=>{
 const AdminLogout = async(req, res)=>{
     try{
         console.log("hello")
-        destroyAdminToken()
+        destroyAdminToken(req, res)
         return res.status(200).json({message:"Successfully Logged Out and Jwt Cleared"})
 
     }catch(e){
@@ -112,6 +113,34 @@ const deleteUser = async(req, res)=>{
         
     }
 }
+
+const adduser = async (req, res) => {
+    try {
+        const { name, email, password } = req.body;
+        let profilePicture = null;
+
+        if (req.file) {
+            console.log("File Present");
+            profilePicture = req.file.filename;
+             
+        }
+
+        const addUser = await User.create({
+            name, 
+            email,
+            password,
+            ProfilePicture:profilePicture
+        });
+
+        
+        res.status(201).json({ message: "User added successfully", user: addUser });
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
  
 
 
@@ -120,5 +149,6 @@ export {
     adminLogin,
     AdminLogout,
     getAllUsers,
-    deleteUser
+    deleteUser,
+    adduser
 }

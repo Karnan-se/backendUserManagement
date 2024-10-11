@@ -104,7 +104,7 @@ const userId = userDetails._id.toString()
 
 const userLogout = async(req, res)=>{
     try{
-        destroyUserToken()
+        destroyUserToken(req, res)
         return res.status(200).json({message:"Successfully Logged Out and Jwt Cleared"})
 
     }catch(e){
@@ -118,7 +118,7 @@ const userUpdate = async(req, res)=>{
         const {_id, name , email, } = req.body;
 
        const ObjectId= new mongoose.Types.ObjectId(_id)
-
+    
         console.log(name, email, _id, "from Front End")
 
         let profilePicture
@@ -142,9 +142,7 @@ const userUpdate = async(req, res)=>{
         if(dataSave){
             res.status(200).json({message:"userSaved SuccessFully" ,dataSave})
         }
-        
 
-        
     } catch (error) {
         console.log(error.message)
         

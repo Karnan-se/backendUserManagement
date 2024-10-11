@@ -2,6 +2,7 @@
 import jwt1 from "jsonwebtoken"
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
+import authenticateAdmin from "./adminAuthMiddleware.js";
 
 
 const protect = asyncHandler(async(req,res,next)=>{
@@ -9,6 +10,10 @@ const protect = asyncHandler(async(req,res,next)=>{
    
     console.log(req.cookies)
    let token = await req.cookies.Jwt;
+
+   if(!token){
+    return authenticateAdmin(req, res, next);
+   }
 
         
         console.log(process.env.JWT_SECRET)
