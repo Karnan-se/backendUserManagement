@@ -117,19 +117,26 @@ const deleteUser = async(req, res)=>{
 const adduser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        let profilePicture = null;
+        let profilePicture 
 
         if (req.file) {
             console.log("File Present");
             profilePicture = req.file.filename;
-             
+            console.log(profilePicture)
+
         }
+        const userExist = await User.findOne({email:email})
+        if(userExist){
+            console.log("email Exist")
+           return res.status(401).json({message:"Email Exist"})
+        }
+
 
         const addUser = await User.create({
             name, 
             email,
             password,
-            ProfilePicture:profilePicture
+            ProfilePicture:`/uploads/${profilePicture}` 
         });
 
         
