@@ -115,6 +115,14 @@ export default function UserEdit(){
       try {
         const res = await userUpdate(formData).unwrap()
         console.log(res);
+        if(res){
+          Swal.fire({
+            icon:"success",
+            title:"Success",
+            text:"User Details Updated",
+            
+          })
+        }
         
       } catch (error) {
         console.log(error.message)

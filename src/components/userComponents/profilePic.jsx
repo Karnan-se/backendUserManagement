@@ -3,13 +3,25 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import { userLogout } from '../../features/userAuthSlice';
 import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useLogoutMutation } from '../../features/userApiSlice';
+import { useGetUserDataQuery, useLogoutMutation } from '../../features/userApiSlice';
 
 
 
 
 
 export default function ProfilePic(){
+
+
+  const {data, isLoading, isSuccess}= useGetUserDataQuery()
+ 
+
+  let profilePics
+  if(isSuccess && data.userData){
+    console.log(data, "data");
+    console.log(data.userData.ProfilePicture, "proPic")
+    profilePics= data.userData.ProfilePicture ? `http://localhost:3000${data.userData.ProfilePicture}`: "http://localhost:3000/uploads/avatar.jpeg"
+  }
+
 
   const dispatch = useDispatch();
   const [logout]= useLogoutMutation()
@@ -57,7 +69,7 @@ export default function ProfilePic(){
             <span className="sr-only">Open user menu</span>
             <img
               className="h-8 w-8 rounded-full"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              src={profilePics}
               alt="User Avatar"
             />
           </button>

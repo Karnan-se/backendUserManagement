@@ -6,7 +6,7 @@ const USERS_URL ="http://localhost:3000/api/admin"
 
 export const adminApiSlice = createApi({
     reducerPath:"adminAuth",
-    baseQuery:fetchBaseQuery({baseUrl:USERS_URL}),
+    baseQuery:fetchBaseQuery({baseUrl:USERS_URL, credentials: "include"}),
 
     endpoints:(builder)=>({
         login:builder.mutation({
@@ -63,10 +63,18 @@ export const adminApiSlice = createApi({
             }),
             invalidatesTags:["users-Details"]
         }),
+        Adduser:builder.mutation({
+            query:(data)=>({
+                url:"/addUser",
+                method:"POST",
+                body:data,
+            }),
+            invalidatesTags:["users-Details"]
+        })
         
     }),
 
 });
 
-export const {useLoginMutation, useAdminlogoutMutation, useRegisterMutation, useUpdateuserMutation, useGetUsersDataQuery, useDeleteUserDataMutation} = adminApiSlice
+export const {useLoginMutation, useAdminlogoutMutation, useRegisterMutation, useUpdateuserMutation, useGetUsersDataQuery, useDeleteUserDataMutation, useAdduserMutation} = adminApiSlice
 

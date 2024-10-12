@@ -12,6 +12,8 @@ import UserPage from './pages/user/userdashBoard'
 import UserEdit from './pages/user/userEdit'
 import UserPrivateRoute from './pages/user/userPrivateRoute'
 import AdminUserEdit from './pages/admin/adminUserEdit'
+import NotFound from './pages/user/NotFound'
+import AddUser from './pages/admin/adduser'
 
 
 
@@ -31,6 +33,8 @@ function App() {
         <Route element={<AdminPrivateRoute />} >
         <Route path='/admindashboard' element={<AdminDashboard/>}>
         <Route path='/admindashboard/editUser/:userId' element={<AdminUserEdit/>}></Route>
+        <Route path='/admindashboard/admin/adduser' element={<AddUser/>}></Route>
+
         </Route>
 
         </Route>
@@ -45,6 +49,8 @@ function App() {
         <Route path='/edit'  element={<UserEdit/>}></Route>
         </Route>
         </Route>
+
+        <Route path='*' element={<NotFound/>}></Route>
 
         
       </Routes>

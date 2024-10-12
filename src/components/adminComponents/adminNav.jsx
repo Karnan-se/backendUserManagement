@@ -2,7 +2,7 @@
 import { NavLink } from "react-router-dom"
 import { logout } from "../../features/authSlice"
 import { useDispatch } from "react-redux"
-import { useAdminlogoutMutation } from "../../features/adminApiSlice"
+import { useAdminlogoutMutation, useGetUsersDataQuery } from "../../features/adminApiSlice"
 
 
 
@@ -10,6 +10,7 @@ export default function NavBarComponent(){
 
     const dispatch = useDispatch()
     const [adminlogout] =useAdminlogoutMutation()
+    const {data} = useGetUsersDataQuery
 
     const logoutto = async(e)=>{
         e.preventDefault()
@@ -33,7 +34,11 @@ export default function NavBarComponent(){
     <div className="relative flex h-16 items-center justify-between">
 
           <div className="flex space-x-4 w-full justify-between">
-            <NavLink  className={({isActive})=> isActive?'rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white' : 'rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white'  }>Dashboard</NavLink>
+            <NavLink to={"/admindashboard"}  className={({isActive})=> isActive?'rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white' : 'rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white'  }>Dashboard</NavLink>
+            <NavLink to={"/admindashboard/admin/adduser"}  className={({isActive})=> isActive?'rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white' : 'rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white'  }>Add</NavLink>
+            <div></div>
+            <div></div>
+            <div></div>
             <NavLink onClick={logoutto}  className={'rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white ml-auto '  }>LOGOUT</NavLink>
 
           </div>
@@ -41,7 +46,7 @@ export default function NavBarComponent(){
       
       <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-        {/* <ProfilePic/> */}
+     
 
       </div>
     </div>

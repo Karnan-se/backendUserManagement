@@ -12,6 +12,7 @@ export const userSlice = createApi({
                 method: "POST",
                 body: data,
             }),
+            invalidatesTags:["users"]
         }),
         userRegister: builder.mutation({
             query: (data) => ({
@@ -19,16 +20,21 @@ export const userSlice = createApi({
                 method: "POST",
                 body: data,
             }),
+            invalidatesTags:["users"]
+
         }),
         getUserData: builder.query({
             query: () => "/",
+            providesTags:["users"]
         }),
+
         logout: builder.mutation({
             query:()=>({
                 url:"/logout",
                 method:"POST",
                 
-            })
+            }),
+            invalidatesTags:["users"]
                 
         }),
         userUpdate:builder.mutation({
@@ -37,7 +43,10 @@ export const userSlice = createApi({
                 method:"POST",
                 body:data
             }),
-        })
+            invalidatesTags:["users"]
+
+        }),
+    
 
     }),
 
